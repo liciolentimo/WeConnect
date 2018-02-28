@@ -12,6 +12,25 @@ div.nav-image {
 	margin-top: 0px;
 
 }
+.con-image2 {
+	background-image: url(images/conlarge.jpg);
+	width: auto;
+	height: 230px;
+	margin-top: 0px;
+}
+.tuskys-image {
+	background-image: url(images/tuskyslarge.png);
+	width: auto;
+	height: 250px;
+	margin-top: 0px;
+}
+.get-image {
+	background-image: url(images/get.png);
+	width: auto;
+	height: 250px;
+	margin-top: 0px;
+}
+
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
@@ -21,6 +40,7 @@ body{
   overflow-y: scroll; 
   overflow-x:hidden;
 }
+
 
 .search {
   width: 100%;
@@ -39,7 +59,7 @@ body{
 }
 
 .searchTerm:focus{
-  color: #00B4CC;
+  color: #000;
 }
 
 .searchButton {
@@ -63,7 +83,7 @@ body{
   left: 50%;
   transform: translate(-50%, -50%);
 }
-h2 {
+h2, h1 {
 	text-align: center;
 	font-family: 'Lato', sans-serif;
 }
@@ -90,4 +110,28 @@ div.thumbnail p {
 }
 #view {
 	font-size: 15px;
+}
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+   color:yellow;
+}
+#star {
+	font-size: 40px;
+
+}
+#rate {
+	font-size: 40px;
 }
