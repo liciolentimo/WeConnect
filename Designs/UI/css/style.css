@@ -18,6 +18,8 @@ div.nav-image {
 body{
   background: #f2f2f2;
   font-family: 'Open Sans', sans-serif;
+  overflow-y: scroll; 
+  overflow-x:hidden;
 }
 
 .search {
@@ -70,4 +72,22 @@ h2 {
 	float: none;
 	text-align: center;
 }
-
+div.row {
+  margin: 0 0 10px;
+  font-size: 0.8em;
+  letter-spacing: 1px;
+  opacity: 1;
+}
+div.thumbnail p {
+  display: block;
+  font-size: 0.5em;
+  color: #2980b9;
+}
+.btn btn-primary {
+  margin-right: 4%;
+  border-color: #2980b9;
+  color: #2980b9;
+}
+#view {
+	font-size: 15px;
+}
