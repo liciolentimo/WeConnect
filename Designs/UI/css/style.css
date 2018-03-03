@@ -1,0 +1,141 @@
+
+div.nav-image {
+	width: 1500px;
+	height: 200px;
+	padding-top: 0px;
+	margin-top: 0px;
+}
+.nav-image {
+	background-image: url(images/shop1.jpg);
+	width: auto;
+	height: 150px;
+	margin-top: 0px;
+
+}
+.con-image2 {
+	background-image: url(images/conlarge.jpg);
+	width: auto;
+	height: 230px;
+	margin-top: 0px;
+}
+.tuskys-image {
+	background-image: url(images/tuskyslarge.png);
+	width: auto;
+	height: 250px;
+	margin-top: 0px;
+}
+.get-image {
+	background-image: url(images/get.png);
+	width: auto;
+	height: 250px;
+	margin-top: 0px;
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+  background: #f2f2f2;
+  font-family: 'Open Sans', sans-serif;
+  overflow-y: scroll; 
+  overflow-x:hidden;
+}
+
+
+.search {
+  width: 100%;
+  position: relative;
+}
+
+.searchTerm {
+  float: left;
+  width: 100%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 38px;
+  border-radius: 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #000;
+}
+
+.searchButton {
+  position: absolute;  
+  right: -50px;
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.wrap{
+  width: 40%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+h2, h1 {
+	text-align: center;
+	font-family: 'Lato', sans-serif;
+}
+.thumbnail {
+	display: inline-block;
+	float: none;
+	text-align: center;
+}
+div.row {
+  margin: 0 0 10px;
+  font-size: 0.8em;
+  letter-spacing: 1px;
+  opacity: 1;
+}
+div.thumbnail p {
+  display: block;
+  font-size: 0.5em;
+  color: #2980b9;
+}
+.btn btn-primary {
+  margin-right: 4%;
+  border-color: #2980b9;
+  color: #2980b9;
+}
+#view {
+	font-size: 15px;
+}
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+   color:yellow;
+}
+#star {
+	font-size: 40px;
+
+}
+#rate {
+	font-size: 40px;
+}
+#tbl {
+ 	width: 100%;
+ 	height: 50px;
+}
