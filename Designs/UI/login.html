@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Login</title>
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link type="text/js" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
 </head>
@@ -9,13 +10,13 @@
 	<nav class="navbar navbar-default">
 	<div class="container">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapsed" data-target="#navbar" aria-controls="#navbar" aria-expanded="false" aria-label="Toggle navigation">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-controls="#navbar" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="sr-only">Toggle navigation</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">WeConnect</a>
+			<a class="navbar-brand" href="index.html">WeConnect</a>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
@@ -23,11 +24,11 @@
 				<li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-	            <li><a href="#">Wholesale and Retail</a></li>
-	            <li><a href="#">Construction</a></li>
-	            <li><a href="#">Hotels/Restaurants</a></li>
-	            <li><a href="#">Finance</a></li>
-				<li><a href="#">Health</a></li>
+	           <li><a href="retail.html">Wholesale and Retail</a></li>
+	            <li><a href="construction.html">Construction</a></li>
+	            <li><a href="hotel.html">Hotels/Restaurants</a></li>
+	            <li><a href="finance.html">Finance</a></li>
+				<li><a href="health.html">Health</a></li>
 				</ul>
 			  </li>
 			</ul>
@@ -37,19 +38,26 @@
       </ul>
 	 </div>
 	</div>
-</nav>
+</nav><br><br>
+<h2 align="center">Login</h2><br>
+<div class="form-align" align="center">
 <form action="" method="POST">
-  	<div class="form-group">
+  	<div class="form-group" style="width:400px;">
   	  <label>Email</label>	
-  	  <!--<span class="glyphicon glyphicon-user" aria-hidden="true"> -->
-  	  <input type="email" name="username" class="form-control" placeholder="Enter your email"><br>
+  	  <input class="form-control" type="email" name="username" placeholder="Enter your email" required="required"><br>
   	</div>
-  	<div class="form-group">
+  	<div class="form-group" style="width:400px;">
   	  <label>Password</label>
-  	  <input type="text" name="password" class="form-control" placeholder="Enter your password"><br>	
+  	  <input class="form-control" type="password" name="password" placeholder="Enter your password" required="required"><br>	
   	</div>
+  	<p><a href="#">Forgot Password?</a></p>
   	<button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  </form><br>
+  <p>Don't have a WeConnect account? Sign Up <a href="register.html">here</a></p>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <nav class="navbar navbar-default navbar-fixed-bottom">
   <div class="container" align="center">
    &copy Licio Lentimo
