@@ -1,17 +1,41 @@
 from flask import Flask, url_for, request, abort, make_response,Response,jsonify
-from user import User 
-from utils import JSON_MIME_TYPE,search_business
+from user import User,USERS 
 import json
-
+from business import Business,businessdetails
 
 app = Flask(__name__)
 
+users=User()
+
+@app.route('/api/v1/users',methods=['GET'])
+def get_users():
+	return jsonify({'users':USERS}),200
 
 # @app.errorhandler(404)
 # def not_found(error):
 # 		return make_response(jsonify({'error':'Not found'}),404)
+@app.route('/api/v1/register', methods=['GET','POST'])
+def register_user():
+	if not request.json:
+		abort(400)
+	data = request.get_json()
+	email = data.get('email')
+	username = data.get('username')
+	password = data.get('password')
+	allemails = [i['email']for i in USERS if 'email' in i]
+	allusernames = [i['username'] for i in USERS if 'username' in i]
+	for e in allemails[:]:
+		if e == email:
+			abort(400)	
+	for u in allusernames[:]:
+		if u == username:
+			abort(400)
+	user = users.register_user(username,email,password)
+	return jsonify({'user':user})
 
-@app.route('/api/v1/login')
+
+
+@app.route('/api/v1/login',methods=['POST'])
 def login():
 	auth = request.authorization
 	if auth and auth.password == '123':
@@ -20,19 +44,17 @@ def login():
 	return make_response('Could not verify!',401,{'WWW-Authenticate':'Basic realm="Login required"'})		
 
 
-@app.route('/api/v1/business')
+@app.route('/api/v1/business',methods=['GET'])
 def list_business():
-	response = Response(json.dumps(business),status=200,mimetype=JSON_MIME_TYPE)
-	return response
+	return jsonify({'businessdetails':businessdetails})
 
-@app.route('/api/v1/business/<int:business_id>')
-def business_details():
-	thebusiness = search_business(business,business_id)
-	if thebusiness is None:
+@app.route('/api/v1/business/<int:business_id>',methods=['GET'])
+def business_details(business_id):
+	business = [business for business in businessdetails if business['id']== business_id]
+	if len(business) == 0:
 		abort(404)
+	return jsonify({'business':business[0]})	
 
-	content = json.dumps(thebusiness)
-	return content,200,{'Content-Type':JSON_MIME_TYPE}
 
 @app.errorhandler(404)
 def not_found(e):
