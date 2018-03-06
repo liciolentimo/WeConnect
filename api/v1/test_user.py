@@ -1,11 +1,17 @@
 import unittest
-from user import User
+from user import User,USERS
+from business import Business, businessdetails
 
 
 class UserTest(unittest.TestCase):
-	
+
 	def setUp(self):
 		self.user = User()
+		USERS = {'username':'john',
+				'email':'john@email.com',
+				'password':'123'	
+
+		}
 
 	def test_create_user(self):
 		self.user.create_user('john','john@email.com','123')

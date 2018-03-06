@@ -16,7 +16,7 @@ businessdetails = [{
 
 			}]
 
-			
+
 class Business():
 
 	
@@ -27,7 +27,8 @@ class Business():
 	
 
 	def create_business(self,businessname,location,category):
-		business = {'businessname':businessname,
+		business = {'id':business[-1]['id']+1,
+					'businessname':businessname,
 					'location':location,
 					'category':category
 		}
