@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, abort, make_response,Response,jsonify
+from flask import Flask, url_for, request, abort, make_response,jsonify
 from user import User,USERS 
 import json
 from business import Business,businessdetails
@@ -37,11 +37,17 @@ def register_user():
 
 @app.route('/api/v1/login',methods=['POST'])
 def login():
-	auth = request.authorization
-	if auth and auth.password == '123':
-		return ''
-
-	return make_response('Could not verify!',401,{'WWW-Authenticate':'Basic realm="Login required"'})		
+	if not request.json:
+		abort(400)
+	data = request.get_json()
+	email = data.get('email')
+	password = data.get('password')
+	user = users.login(email,password)
+	session['useremail'] = user[0]['email']
+	if 'useremail' in session:
+		useremail = session['useremail']
+		return jsonify({'logged_in':useremail}),200
+	return jsonify({'status':'Not logged in'}),401		
 
 
 @app.route('/api/v1/business',methods=['GET'])
