@@ -6,13 +6,6 @@ import json
 
 app = Flask(__name__)
 
-business = [{
-		'id': 1,
-		'name':'tuskys',
-		'location': 'nairobi',
-		'category':'supermarket'
-
-}]
 
 # @app.errorhandler(404)
 # def not_found(error):

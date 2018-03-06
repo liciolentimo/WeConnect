@@ -1,8 +1,13 @@
 from flask import json
 
-
+USERS = [{
+			'username':'john',
+			'email':'john@email.com',
+			'password':'123'
+	}]
 
 class User():
+	
 	
 	
 	
@@ -11,17 +16,22 @@ class User():
 		self.username = None
 		self.email = None
 		self.password = None
-		self.Users = {}
+		
 
 	def create_user(self,username,email,password):
-			user = [{'username':username,
+			user = {'username':username,
 					'email':email,
-					'password':password}]
-			self.Users['user'] = json.dumps(user)
+					'password':password}
+					USERS.append(users)
+			# self.Users['user'] = json.dumps(user)
 			return user		
 
 	def get_user(self):
-			return Users	
+			return USERS
+
+	def login(self,email,password):
+		user = 
+					
 
 
 		# def find_element_by_name(self):
