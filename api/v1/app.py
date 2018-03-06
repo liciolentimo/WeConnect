@@ -14,7 +14,7 @@ def get_users():
 # @app.errorhandler(404)
 # def not_found(error):
 # 		return make_response(jsonify({'error':'Not found'}),404)
-@app.route('/register', methods=['POST'])
+@app.route('/api/v1/register', methods=['POST'])
 def register_user():
 	if not request.json:
 		abort(400)
@@ -35,7 +35,7 @@ def register_user():
 
 
 
-@app.route('/login',methods=['POST'])
+@app.route('/api/v1/login',methods=['POST'])
 def login():
 	if not request.json:
 		abort(400)
@@ -49,12 +49,12 @@ def login():
 		return jsonify({'logged_in':useremail}),200
 	return jsonify({'status':'Not logged in'}),401
 	
-@app.route('/logout',methods=['POST'])
+@app.route('/api/v1/logout',methods=['POST'])
 def logout():
 	session.pop('useremail',None)
 	return jsonify({'status':'You have been successfully logged out'}),200
 
-@app.route('/resetpassword',methods=['POST'])
+@app.route('/api/v1/resetpassword',methods=['POST'])
 def reset_password():
 	if not request.json:
 		abort(400)
@@ -67,18 +67,18 @@ def reset_password():
 	return jsonify({'user':user}),200					
 
 
-@app.route('/business',methods=['GET'])
+@app.route('/api/v1/business',methods=['GET'])
 def list_business():
 	return jsonify({'businessdetails':businessdetails})
 
-@app.route('/business/<int:business_id>',methods=['GET'])
+@app.route('/api/v1/business/<int:business_id>',methods=['GET'])
 def business_details(business_id):
 	business = [business for business in businessdetails if business['id']== business_id]
 	if len(business) == 0:
 		abort(404)
 	return jsonify({'business':business[0]})	
 
-@app.route(/updatebusiness,methods=['PUT'])
+@app.route('/api/v1/updatebusiness',methods=['PUT'])
 def update_business(business_id):
 	business = [business for business in businessdetails['id'] == business_id]
 	if len(business)==0:
@@ -95,7 +95,15 @@ def update_business(business_id):
 	business[0]['location'] = request.json.get('location',business[0]['location'])
 	business[0]['category'] = request.json.get('category',business[0]['category'])
 
-	return jsonify({'business':business[0]})						
+	return jsonify({'business':business[0]})	
+
+@app.route('/api/v1/deletebusiness',methods=['DELETE'])
+def delete_business(business_id):
+	business = [business for business in businessdetails if business['id'] == business_id]
+	if len(business) == 0:
+		abort(404)
+	businessdetails.remove(business[0])
+	return jsonify({'result':True})							
 
 
 @app.errorhandler(404)
