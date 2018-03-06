@@ -22,7 +22,8 @@ class User():
 			user = {'username':username,
 					'email':email,
 					'password':password}
-					USERS.append(users)
+			USERS.append(user)
+			return {'message': 'User successfully created'}
 			# self.Users['user'] = json.dumps(user)
 			return user		
 
@@ -30,7 +31,11 @@ class User():
 			return USERS
 
 	def login(self,email,password):
-		user = 
+		user = [user for user in USERS if user['email']== email and user['password']==password]
+		return user
+
+	
+	
 					
 
 
