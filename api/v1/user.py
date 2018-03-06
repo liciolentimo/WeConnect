@@ -34,7 +34,10 @@ class User():
 		user = [user for user in USERS if user['email']== email and user['password']==password]
 		return user
 
-	
+	def reset_password(self,email,password,new_password):
+		user = [user for user in USERS if user['email']==email and user['password']==password]
+		user[0]['password']=new_password
+		return user
 	
 					
 
