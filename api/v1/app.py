@@ -47,7 +47,12 @@ def login():
 	if 'useremail' in session:
 		useremail = session['useremail']
 		return jsonify({'logged_in':useremail}),200
-	return jsonify({'status':'Not logged in'}),401		
+	return jsonify({'status':'Not logged in'}),401
+	
+@app.route('/api/v1/logout'.methods=['POST'])
+def logout():
+	session.pop('useremail',None)
+	return jsonify({'status':'You have been successfully logged out'}),200			
 
 
 @app.route('/api/v1/business',methods=['GET'])
