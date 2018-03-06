@@ -49,10 +49,22 @@ def login():
 		return jsonify({'logged_in':useremail}),200
 	return jsonify({'status':'Not logged in'}),401
 	
-@app.route('/api/v1/logout'.methods=['POST'])
+@app.route('/api/v1/logout',methods=['POST'])
 def logout():
 	session.pop('useremail',None)
-	return jsonify({'status':'You have been successfully logged out'}),200			
+	return jsonify({'status':'You have been successfully logged out'}),200
+
+@app.route('/api/v1/resetpassword',methods=['POST'])
+def reset_password():
+	if not request.json:
+		abort(400)
+	data = request.get_json()
+	email = data.get('email')
+	password = data.get('password')
+	new_password = data.get('new_password')
+
+	user = users.reset_password(email,password,new_password)
+	return jsonify({'user':user}),200					
 
 
 @app.route('/api/v1/business',methods=['GET'])
