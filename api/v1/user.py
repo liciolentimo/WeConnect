@@ -38,10 +38,9 @@ class User():
 				
 			
 			# self.Users['user'] = json.dumps(user)
-			return user		
 
 	def get_user(self):
-			return list_user
+			return self.list_user
 
 	def login(self,email,password):
 		for user in self.list_user:
