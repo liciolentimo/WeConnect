@@ -1,5 +1,5 @@
 from flask import Flask, url_for, request, abort, make_response,jsonify
-from user import User,USERS 
+from user import User
 import json
 from business import Business,businessdetails
 
@@ -7,13 +7,11 @@ app = Flask(__name__)
 
 users=User()
 
-@app.route('/users',methods=['GET'])
+@app.route('/api/v1/users',methods=['GET'])
 def get_users():
-	return jsonify({'users':USERS}),200
+	users=Users.get_user()
+	return jsonify({'users':users}),200
 
-# @app.errorhandler(404)
-# def not_found(error):
-# 		return make_response(jsonify({'error':'Not found'}),404)
 @app.route('/api/v1/register', methods=['POST'])
 def register_user():
 	if not request.json:
@@ -22,18 +20,39 @@ def register_user():
 	email = data.get('email')
 	username = data.get('username')
 	password = data.get('password')
-	allemails = [i['email']for i in USERS if 'email' in i]
-	allusernames = [i['username'] for i in USERS if 'username' in i]
-	for e in allemails[:]:
-		if e == email:
-			abort(400)	
-	for u in allusernames[:]:
-		if u == username:
-			abort(400)
-	user = users.register_user(username,email,password)
-	return jsonify({'user':user})
+	allemails = [i['email']for i in User if 'email' in i]
+	allusernames = [i['username'] for i in User if 'username' in i]
+	# for e in allemails[:]:
+	# 	if e == email:
+	# 		abort(406)	
+	# for u in allusernames[:]:
+	# 	if u == username:
+	# 		abort(406)
+	user = users.create_user(username,email,password)
+	return make_response(jsonify({'message':'successfully registered'}))
+	return make_response(jsonify({'user':user}),200)
 
 
+# @app.route('/api/v1/register',methods=['GET','POST'])
+# def register_user():
+# 	if request.method == 'POST':
+# 		data = request.get_json()
+# 		email = data.get('email')
+# 		username = data.get('username')
+# 		password = data.get('password')
+# 		if not user.check_email(email):
+# 			response = {'message': 'Invalid email address'}
+# 			return make_response(jsonify(response)),400
+# 		if not email in USERS.keys():
+# 			try:
+# 				user.create_account(username,email,password)
+# 				response = {'message':'successfully registered'}
+# 				return make_response(jsonify(response)),201
+# 			except Exception as e:
+# 				response = {'message':str(e)}
+# 				return make_response(jsonify(response)),401
+# 		response = {'message':'User already exists'}
+# 		return make_response(jsonify(response)),202				
 
 @app.route('/api/v1/login',methods=['POST'])
 def login():
@@ -43,11 +62,13 @@ def login():
 	email = data.get('email')
 	password = data.get('password')
 	user = users.login(email,password)
-	session['useremail'] = user[0]['email']
-	if 'useremail' in session:
-		useremail = session['useremail']
-		return jsonify({'logged_in':useremail}),200
-	return jsonify({'status':'Not logged in'}),401
+	# session['useremail'] = ['email']
+	# if 'useremail' in session:
+	if len(user)==0:
+		return jsonify({'status':'Not logged in'}),401
+	# session['useremail'] = user[0]['email']
+	# useremail = session['useremail']
+	return jsonify({'logged_in':email}),202
 	
 @app.route('/api/v1/logout',methods=['POST'])
 def logout():
@@ -64,7 +85,30 @@ def reset_password():
 	new_password = data.get('new_password')
 
 	user = users.reset_password(email,password,new_password)
-	return jsonify({'user':user}),200					
+	return jsonify({'user':user}),200		
+
+@app.route('/api/v1/addbusiness', methods=['GET','POST'])
+def register_business():
+	if request.method == 'POST':
+		if request.json:
+			data=request.get_json()
+			email = data.get('email')
+			password = data.get('password')
+			user = users.create_user(email,password)
+			user = users.login(email,password)
+			logged_in_user = user['email']
+			if logged_in_user:
+				data = request.get_json()
+				useremail = logged_in_user
+				name = data.get('name')
+				location = data.get('location')
+				category = data.get('category')
+				business.register_business(email,name,location,category)
+				return make_response(jsonify({'message':'business created successfully'}),201)
+		else:
+			return make_response(jsonify({'Business':businessdetails}),200)			
+
+
 
 
 @app.route('/api/v1/business',methods=['GET'])
@@ -109,11 +153,6 @@ def delete_business(business_id):
 @app.errorhandler(404)
 def not_found(e):
 	return '',404
-
-
-
-# @app.route('api/v1//login')
-# # def login():
 
 
 if __name__ == '__main__':
