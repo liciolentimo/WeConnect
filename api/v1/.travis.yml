@@ -1,0 +1,10 @@
+sudo: false
+language: python
+python:
+  - 3.6.2
+script:
+  - nosetests --with-coverage
+  - coverage report
+after_success:
+  - codeclimate-test-reporter
+  - coveralls
