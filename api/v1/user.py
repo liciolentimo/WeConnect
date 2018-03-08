@@ -30,6 +30,7 @@ class User():
 				userinfo['username'] = username	
 				userinfo['email'] = email
 				userinfo['password'] = password
+				# userinfo['confirm_password'] = confirm_password
 
 				self.list_user.append(userinfo)
 			else:
