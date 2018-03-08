@@ -29,8 +29,12 @@ def register_user():
 		if u == username:
 			abort(406)
 	user = users.create_user(username,email,password,confirm_password)
-	return make_response(jsonify({'message':'successfully registered'}))
-	return make_response(jsonify({'user':user}),200)
+	print(user)
+	if user == True:
+		return make_response(jsonify({'message':'successfully registered'}))
+		return make_response(jsonify({'user':user}),200)
+	else:
+		return make_response(jsonify({'message': str(user)}))
 
 @app.route('/api/v1/users',methods=['GET'])
 def get_users():
@@ -39,26 +43,6 @@ def get_users():
 	return jsonify({'users':users}),200	
 
 
-# @app.route('/api/v1/register',methods=['GET','POST'])
-# def register_user():
-# 	if request.method == 'POST':
-# 		data = request.get_json()
-# 		email = data.get('email')
-# 		username = data.get('username')
-# 		password = data.get('password')
-# 		if not user.check_email(email):
-# 			response = {'message': 'Invalid email address'}
-# 			return make_response(jsonify(response)),400
-# 		if not email in USERS.keys():
-# 			try:
-# 				user.create_account(username,email,password)
-# 				response = {'message':'successfully registered'}
-# 				return make_response(jsonify(response)),201
-# 			except Exception as e:
-# 				response = {'message':str(e)}
-# 				return make_response(jsonify(response)),401
-# 		response = {'message':'User already exists'}
-# 		return make_response(jsonify(response)),202				
 
 @app.route('/api/v1/login',methods=['POST'])
 def login():

@@ -26,17 +26,16 @@ class User():
 			elif not re.match(r"(^[a-zA-Z0-9_.]+@[a-zA-Z0-9-]+\.[a-z]+$)", email):
 				return "Please enter a valid email address"	
 			#check whether password matches with confirm password
-			elif password == confirm_password:
+			elif password != confirm_password:
+				return "Passwords do not match"
+			else:
 				userinfo['username'] = username	
 				userinfo['email'] = email
 				userinfo['password'] = password
 				# userinfo['confirm_password'] = confirm_password
 
 				self.list_user.append(userinfo)
-			else:
-				return "Passwords do not match"
-			return "User successfully registered"					
-				
+				return True
 			
 			# self.Users['user'] = json.dumps(user)
 
