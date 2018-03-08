@@ -1,12 +1,14 @@
-from flask import Flask, url_for, request, abort, make_response,jsonify
+from flask import Flask, url_for, request, abort, make_response,jsonify,session
 from user import User
 import json
+import os
 from business import Business,businessdetails
 
 app = Flask(__name__)
 
 users=User()
 business = Business()
+# app.SECRET_KEY = os.random(24)
 
 
 @app.route('/api/v1/register', methods=['POST'])
@@ -24,10 +26,10 @@ def register_user():
 	allusernames = [i['username'] for i in users.list_user if 'username' in i]
 	for e in allemails[:]:
 		if e == email:
-			abort(406)	
+			return make_response(jsonify({'message':'User already exists'}))	
 	for u in allusernames[:]:
 		if u == username:
-			abort(406)
+			return make_response(jsonify({'message':'User already exists'}))
 	user = users.create_user(username,email,password,confirm_password)
 	print(user)
 	if user == True:
@@ -52,17 +54,18 @@ def login():
 	email = data.get('email')
 	password = data.get('password')
 	user = users.login(email,password)
-	# session['useremail'] = ['email']
-	# if 'useremail' in session:
-	# 	if len(user)==0:
-	# 		return jsonify({'status':'Not logged in'}),401
 	# session['useremail'] = user['email']
-	# useremail = session['useremail']
-	return jsonify({'logged_in':email}),202
+	if email not in session:
+		# if len(user)==0:
+		return jsonify({'status':'Not logged in'}),401
+	else:	
+	# session['useremail'] = user['email']
+	# user= session[email]
+		return jsonify({'logged_in':email}),202
 	
 @app.route('/api/v1/logout',methods=['POST'])
 def logout():
-	session.pop('useremail',None)
+	session.pop('email',None)
 	return jsonify({'status':'You have been successfully logged out'}),200
 
 @app.route('/api/v1/resetpassword',methods=['POST'])
@@ -109,7 +112,8 @@ def list_business():
 def business_details(business_id):
 	business = [business for business in businessdetails if business['id']== business_id]
 	if len(business) == 0:
-		abort(404)
+		return make_response(jsonify({'message':'business not found'}))
+		# abort(404)
 	return jsonify({'business':business[0]})	
 
 @app.route('/api/v1/updatebusiness',methods=['PUT'])

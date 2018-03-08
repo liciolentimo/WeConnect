@@ -7,7 +7,7 @@ import json
 class BusinessTest(unittest.TestCase):
 	def setUp(self):
 		self.business = Business()
-		self.test = app.test_client()
+		self.app = app.test_client()
 		self.businesscreds = {
 					'id': 1,
 					'name':'tuskys',
@@ -17,7 +17,7 @@ class BusinessTest(unittest.TestCase):
 		}
 
 	def test_register_business(self):
-		response = self.test.post(
+		response = self.app.post(
 								'/api/v1/addbusiness',
 								data=json.dumps(self.businesscreds),
 								headers={'Content-Type':'application/json'})
@@ -27,8 +27,24 @@ class BusinessTest(unittest.TestCase):
 
 
 	def test_list_business(self):
-		response = self.test.get('/api/v1/business')
+		response = self.app.get(
+								'/api/v1/business',
+								data=json.dumps(self.businesscreds),
+								headers={'Content-Type':'application/json'})
+		response = self.app.get('/api/v1/business')
 		self.assertEqual(response.status_code,200)	
+
+	def test_get_business_by_id(self):
+		response = self.app.get(
+								'/api/v1/business/<int:business_id>',
+								data=json.dumps(self.businesscreds),
+								headers={'Content-Type':'application/json'})
+		self.assertEqual(response.status_code,200)
+		result = json.loads(response.data.decode('utf-8').replace("'", "\""))
+		result = self.app.get(
+							'/api/v1/business/{}'.format(result['id']))
+		# self.assertEqual(response.status_code,200)
+														
 
 	# def test_update_business(self):
 	# 	self.business.business1 = {'created_by':'john@email.com','name':'tuskys','location':'nairobi'}
