@@ -6,11 +6,8 @@ from business import Business,businessdetails
 app = Flask(__name__)
 
 users=User()
+business = Business()
 
-@app.route('/api/v1/users',methods=['GET'])
-def get_users():
-	users=Users.get_user()
-	return jsonify({'users':users}),200
 
 @app.route('/api/v1/register', methods=['POST'])
 def register_user():
@@ -20,17 +17,26 @@ def register_user():
 	email = data.get('email')
 	username = data.get('username')
 	password = data.get('password')
-	allemails = [i['email']for i in User if 'email' in i]
-	allusernames = [i['username'] for i in User if 'username' in i]
-	# for e in allemails[:]:
-	# 	if e == email:
-	# 		abort(406)	
-	# for u in allusernames[:]:
-	# 	if u == username:
-	# 		abort(406)
-	user = users.create_user(username,email,password)
+	confirm_password = data.get('confirm_password')
+	
+	allemails = [i['email']for i in users.list_user if 'email' in i]
+
+	allusernames = [i['username'] for i in users.list_user if 'username' in i]
+	for e in allemails[:]:
+		if e == email:
+			abort(406)	
+	for u in allusernames[:]:
+		if u == username:
+			abort(406)
+	user = users.create_user(username,email,password,confirm_password)
 	return make_response(jsonify({'message':'successfully registered'}))
 	return make_response(jsonify({'user':user}),200)
+
+@app.route('/api/v1/users',methods=['GET'])
+def get_users():
+	data = request.get_json()
+	userdata=data.get_user(users)
+	return jsonify({'users':users}),200	
 
 
 # @app.route('/api/v1/register',methods=['GET','POST'])
@@ -64,9 +70,9 @@ def login():
 	user = users.login(email,password)
 	# session['useremail'] = ['email']
 	# if 'useremail' in session:
-	if len(user)==0:
-		return jsonify({'status':'Not logged in'}),401
-	# session['useremail'] = user[0]['email']
+	# 	if len(user)==0:
+	# 		return jsonify({'status':'Not logged in'}),401
+	# session['useremail'] = user['email']
 	# useremail = session['useremail']
 	return jsonify({'logged_in':email}),202
 	
@@ -80,11 +86,11 @@ def reset_password():
 	if not request.json:
 		abort(400)
 	data = request.get_json()
-	email = data.get('email')
+	# email = data.get('email')
 	password = data.get('password')
 	new_password = data.get('new_password')
 
-	user = users.reset_password(email,password,new_password)
+	user = users.reset_password(password,new_password)
 	return jsonify({'user':user}),200		
 
 @app.route('/api/v1/addbusiness', methods=['GET','POST'])
@@ -92,19 +98,19 @@ def register_business():
 	if request.method == 'POST':
 		if request.json:
 			data=request.get_json()
-			email = data.get('email')
-			password = data.get('password')
-			user = users.create_user(email,password)
-			user = users.login(email,password)
-			logged_in_user = user['email']
-			if logged_in_user:
-				data = request.get_json()
-				useremail = logged_in_user
-				name = data.get('name')
-				location = data.get('location')
-				category = data.get('category')
-				business.register_business(email,name,location,category)
-				return make_response(jsonify({'message':'business created successfully'}),201)
+			# email = data.get('email')
+			# password = data.get('password')
+			# user = users.create_user(email,password)
+			# user = users.login(email,password)
+			# logged_in_user = user['email']
+			# if logged_in_user:
+			# 	data = request.get_json()
+			# 	useremail = logged_in_user
+			name = data.get('name')
+			location = data.get('location')
+			category = data.get('category')
+			business.create_business(name,location,category)
+			return make_response(jsonify({'message':'business created successfully'}),201)
 		else:
 			return make_response(jsonify({'Business':businessdetails}),200)			
 
