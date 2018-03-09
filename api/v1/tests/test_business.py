@@ -52,10 +52,10 @@ class BusinessTest(unittest.TestCase):
 								'/api/v1/business',
 								# data=json.dumps(self.businesscreds),
 								headers={'Content-Type':'application/json'})
-		self.business.list_business = [{'createdby':'john@email.com','name':'biz','location':'nairobi','category':'tech'}]
+		self.business.list_business = [{'user':'john@email.com','name':'biz','location':'nairobi','category':'tech'}]
 		user = 'john@email.com'
 		result = self.business.get_creator(user)
-		self.assertEqual(result,[{'createdby':'john@email.com','name':'biz','location':'nairobi','category':'tech'}])					
+		self.assertEqual(result,[{'user':'john@email.com','name':'biz','location':'nairobi','category':'tech'}])					
 
 	# def test_get_business_by_id(self):
 	# 	response = self.app.post(
