@@ -64,58 +64,43 @@ def login():
 	
 @app.route('/api/v1/logout',methods=['POST'])
 def logout():
-	session.pop('email',None)
-	return jsonify({'status':'You have been successfully logged out'}),200
+	if session.get('email') is not None:
+		session.pop('email',None)
+		return jsonify({'status':'You have been successfully logged out'}),200
+	return jsonify({"message": "Please login."})	
 
 @app.route('/api/v1/resetpassword',methods=['POST'])
 def reset_password():
 	if not request.json:
 		abort(400)
-	data = request.get_json()
+	if request.method == 'POST':
+		data = request.get_json()
 	# email = data.get('email')
-	password = data.get('password')
-	new_password = data.get('new_password')
+		changepassword = data.get('changepassword')
+		new_password = data.get('new_password')
 
-	user = users.reset_password(password,new_password)
+	user = users.reset_password(changepassword,new_password)
 	return jsonify({'user':user}),200		
 
 @app.route('/api/v1/addbusiness', methods=['GET','POST'])
 def register_business():
-	if session.get('username') is not None:
+	if session.get('email') is not None:
 		if request.method == 'POST':
 			businessname = request.json['name']
-			user = request.json['user']
+			# request.get_json('user')
 			location = request.json['location']
 			category = request.json['category']
-			result = business.create_business(businessname,user,location,category)
+			result = business.create_business(businessname,category,location)
 			message = jsonify(result)
-			response.status_code = 201
-			return response	
+			# response.status_code = 201
+			# return response
+			return make_response(jsonify({'message':'business created successfully'}))
+	return jsonify({"message": "Please Login"})
 	
-		# if request.json:
-		# 	data=request.get_json()
-		# 	# email = data.get('email')
-		# 	# password = data.get('password')
-		# 	# user = users.create_user(email,password)
-		# 	# user = users.login(email,password)
-		# 	# logged_in_user = user['email']
-		# 	# if logged_in_user:
-		# 	# 	data = request.get_json()
-		# 	# 	useremail = logged_in_user
-		# 	name = data.get('name')
-		# 	location = data.get('location')
-		# 	category = data.get('category')
-		# 	business.create_business(name,location,category)
-		# 	return make_response(jsonify({'message':'business created successfully'}),201)
-		# else:
-		# 	return make_response(jsonify({'Business':businessdetails}),200)			
-
-
-
 
 @app.route('/api/v1/business',methods=['GET'])
-def list_business():
-	return jsonify({'businessdetails':businessdetails})
+def list_businesses():
+	return jsonify({'allbusiness':allbusiness})
 
 @app.route('/api/v1/business/<int:business_id>',methods=['GET'])
 def business_details(business_id):
@@ -125,33 +110,25 @@ def business_details(business_id):
 		abort(404)
 	return jsonify({'business':business[0]})	
 
-@app.route('/api/v1/updatebusiness',methods=['PUT'])
-def update_business(business_id):
-	business = [business for business in businessdetails['id'] == business_id]
-	if len(business)==0:
-		abort(404)
-	if not request.json:
-		abort(400)
-	if 'name' in request.json and type(request.json['name']) != unicode:
-		abort(400)
-	if 'location' in request.json and type(request.json['location']) != unicode:
-		abort(400)
-	if 'category' in request.json and type(request.json['category']) != unicode:
-		abort(400)
-	business[0]['name'] = request.json.get('name',business[0]['name'])
-	business[0]['location'] = request.json.get('location',business[0]['location'])
-	business[0]['category'] = request.json.get('category',business[0]['category'])
-
-	return jsonify({'business':business[0]})	
-
+# @app.route('/api/v1/updatebusiness',methods=['PUT'])
+# def update_business(business_id):
+# 	if session.get('email') is not None:
+# 		if request.method == 'PUT':
+# 			oldname = business_id
+# 			updatename = request.json['updatename']
+# 			user = session['email']
+# 			update_business = business.update_business(oldname,updatename,user)
+# 			return jsonify(update_business)
+# 	return jsonify({'message':'Please Login'})
+			
 @app.route('/api/v1/deletebusiness',methods=['DELETE'])
 def delete_business(business_id):
-	business = [business for business in businessdetails if business['id'] == business_id]
-	if len(business) == 0:
-		abort(404)
-	businessdetails.remove(business[0])
-	return jsonify({'result':True})							
-
+	if session.get('email') is not None:
+		businessname = business_id
+		user = session['email']
+		delete = business.delete_businesses(businessname,user)
+		return jsonify(delete)
+	return jsonify({"message": "Please Login"})	
 
 @app.errorhandler(404)
 def not_found(e):
