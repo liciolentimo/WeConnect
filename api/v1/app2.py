@@ -1,10 +1,10 @@
 from flask import Flask 
-from flask_sqlalcjhemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////mnt/c/users/licio/desktop/weconnect/v1/database1.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////c/users/licio/desktop/weconnect/v1/database1.db'
 
 db = SQLAlchemy(app)
 
@@ -18,7 +18,27 @@ class User(db.Model):
 class Business(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(50))
-	user_id = db/Column(db.Integer)	
+	user_id = db.Column(db.Integer)	
+
+@app.route('/user', methods=['GET'])
+def get_all_users():
+	return ''
+
+@app.route('/user/<user_id>', methods=['GET'])
+def get_one_user():
+	return ''
+
+@app.route('/user', methods=['POST'])
+def create_user():
+	return ''
+
+@app.route('/user/<user_id>', methods=['PUT'])
+def promote_user():
+	return ''
+
+@app.route('/user/<user_id>', methods=['DELETE'])
+def delete_user():
+	return ''					
 
 if __name__ == '__main__':
 	app.run(debug=True)
