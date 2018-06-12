@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify 
 from flask_sqlalchemy import SQLAlchemy
 import uuid
-from werkzeug.security import generate_password_hash, check password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////c/users/licio/desktop/weconnect/v1/database1.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///c/users/licio/desktop/weconnect/v1/database1.db'
 
 db = SQLAlchemy(app)
 
