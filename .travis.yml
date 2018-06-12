@@ -12,5 +12,9 @@ script:
 after_success:
   - coveralls
 
+branches:
+  only:
+  - challenge2 
+
 notifications:
   email: false  
