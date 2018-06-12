@@ -31,11 +31,7 @@ class Business():
 
 	def create_business(self,businessname,location,category):
 		businessinfo = {}
-		# business = {'id':len(businessinfo)+1,
-		# 			'businessname':businessname,
-		# 			'location':location,
-		# 			'category':category
-		# 			# 'created_by':email
+		#
 		# }
 		if re.match("^[a-zA-Z0-9 _]*$", businessname):
 			# biz = self.get_creator(user)
@@ -47,13 +43,10 @@ class Business():
 			self.list_business.append(businessdict),'business created successfully'
 		else:
 			return "No special characters"
-		# return self.get_creator(user)						
-		# businessinfo.append(business)
-		# # self.Business['business'] = business
-		# return business
+		
 
-	def list_allbusiness(self):
-		allbusiness = [i for i in self.list_business]
+	def list_allbusiness():
+		business = [i for i in Business.list_business]
 
 		return allbusiness
 

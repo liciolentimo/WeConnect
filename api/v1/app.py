@@ -100,7 +100,9 @@ def register_business():
 
 @app.route('/api/v1/business',methods=['GET'])
 def list_businesses():
-	return jsonify({'allbusiness':allbusiness})
+	business = Business.list_allbusiness()
+	return jsonify(business)
+	# return jsonify({'allbusiness':list_business})
 
 @app.route('/api/v1/business/<int:business_id>',methods=['GET'])
 def business_details(business_id):

@@ -47,17 +47,17 @@ class BusinessTest(unittest.TestCase):
 		message = json.loads(response.data.decode("UTF-8"))	
 		self.assertIn("Business name cannot be empty",message['message'])	
 
-	def test_created_by(self):
-		response = self.app.post(
-								'/api/v1/business',
-								# data=json.dumps(self.businesscreds),
-								headers={'Content-Type':'application/json'})
-		self.business.list_business = [{'user':'john@email.com','name':'biz','location':'nairobi','category':'tech'}]
-		user = 'john@email.com'
-		result = self.business.get_creator(user)
-		self.assertEqual(result,[{'user':'john@email.com','name':'biz','location':'nairobi','category':'tech'}])					
+	# def test_created_by(self):
+	# 	response = self.app.post(
+	# 							'/api/v1/business',
+	# 							# data=json.dumps(self.businesscreds),
+	# 							headers={'Content-Type':'application/json'})
+	# 	self.business.list_business = [{'user':'john@email.com','name':'biz','location':'nairobi','category':'tech'}]
+	# 	user = 'john@email.com'
+	# 	result = self.business.get_creator(user)
+	# 	self.assertEqual(result,[{'user':'john@email.com','name':'biz','location':'nairobi','category':'tech'}])					
 
-	# def test_get_business_by_id(self):
+	# # def test_get_business_by_id(self):
 	# 	response = self.app.post(
 	# 							'/api/v1/business/<int:business_id>',
 	# 							# data=json.dumps(self.businesscreds),
