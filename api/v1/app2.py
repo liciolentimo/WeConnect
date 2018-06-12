@@ -15,5 +15,10 @@ class User(db.Model):
 	password = db.Column(db.String(80))
 	admin = db.Column(db.Boolean)
 
+class Business(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(50))
+	user_id = db/Column(db.Integer)	
+
 if __name__ == '__main__':
 	app.run(debug=True)
