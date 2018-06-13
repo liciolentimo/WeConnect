@@ -2,11 +2,13 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
+import sqlite3
+import os
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///c/users/licio/desktop/weconnect/v1/database1.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///c\\users\\licio\\desktop\\weconnect\\v1\\database1.db'
 
 db = SQLAlchemy(app)
 
@@ -24,7 +26,16 @@ class Business(db.Model):
 
 @app.route('/user', methods=['GET'])
 def get_all_users():
-	return ''
+	users = User.query.all()
+	output = []
+	for user in users:
+		user_data = {}
+		user_data['public_id'] = user.public_id
+		user_data['name'] = user.name
+		user_data['password'] = user.password
+		user_data['admin'] = user.admin
+		output.append(user_data)
+	return jsonify({'users' : output})
 
 @app.route('/user/<user_id>', methods=['GET'])
 def get_one_user():
