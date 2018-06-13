@@ -112,7 +112,7 @@ def promote_user(current_user, public_id):
 def delete_user(current_user, public_id):
 	if not current_user.admin:
 		return jsonify({'message' : 'Unable to perform that function'})
-		
+
 	user = User.query.filter_by(public_id=public_id).first()
 	if not user:
 		return jsonify({'message' : 'No user found.'})
@@ -137,6 +137,32 @@ def login():
 		return jsonify({'token' : token.decode('UTF-8')})	
 
 	return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login Required"'})	
+
+@app.route('/business', methods=['GET'])
+@token_required
+def get_all_businesses(current_user):
+	return ''
+
+@app.route('/business/<business_id>', methods=['GET'])
+@token_required
+def get_one_business(current_user, business_id):
+	return ''
+
+@app.route('/business', methods=['POST'])
+@token_required
+def create_business(current_user):
+	return ''
+
+@app.route('/business/<business_id>', methods=['PUT'])
+@token_required
+def edit_business(current_user, business_id):
+	return ''
+
+@app.route('/business/<business_id>', methods=['DELETE'])
+@token_required
+def delete_business(current_user, business_id):
+	return ''				
+
 
 
 if __name__ == '__main__':
