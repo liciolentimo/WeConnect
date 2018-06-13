@@ -41,3 +41,7 @@ on your browser open up [http://127.0.0.1:5000/api/v1/](http://127.0.0.1:5000/ap
 | GET /api/v1/businesses/'businessId | Get a business |
 | POST /api/v1/businesses/businessId/reviews | Add a review for a business |
 | GET /api/v1/businesses/businessId/reviews | Get all reviews for a business |
+
+## License
+
+[MIT](LICENSE) © Licio Lentimo
